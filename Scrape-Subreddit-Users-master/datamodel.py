@@ -1,7 +1,9 @@
 from database import *
 from sqlalchemy import Table, Column, Boolean, Float, Integer, String, Unicode, DateTime, ForeignKey
 from sqlalchemy.orm import relation,backref
-import datetime 
+import datetime
+
+
 
 class User(Base):
     """
@@ -11,12 +13,13 @@ class User(Base):
     username = Column(String, primary_key=True)
     created_date = Column(DateTime)
     last_scraped = Column(DateTime)
-    
-    def __init__(self,u,l=datetime.datetime.now()):
+
+    def __init__(self,u):
+        l = datetime.datetime.now()
         self.username = u
-        self.created_date = datetime.datetime.now() #This looks wierd to me, but it works... This should really be a database-side trigger, though.
+        self.created_date = datetime.datetime.now()
         self.last_scraped = l
-    
+
 class Comment(Base):
     """
     Connects select fields of a praw.Comment object to the db

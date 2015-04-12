@@ -6,15 +6,13 @@
 #    entered in the dict
 
 import database as db
-#from ScrapeSubUsers import *
 from GetSubredditSubscribers import *
 import time
 import praw
-
-starttime = time.time()
+import csv
 
 _nposts = 1
-
+starttime = time.time()
 
 db.init_db()
 s = SubredditScraper()
@@ -32,12 +30,17 @@ session = Session()
 
 for username in s.authors:
     try:
-        session.add(User(username))
-    except err:
+        found_user = session.query(User).filter(User.username == username)
+        if found_user:
+            pass
+        else:
+            session.add(User(username))
+    except Exception as err:
         # TODO: determine exact SQLAlchemy error thrown here
         print("could not save user %s: %s" % (username, err))
 
 session.commit()
+session = Session()
 
 from sqlalchemy import distinct
 allusers = session.query(User.username)
@@ -50,7 +53,7 @@ r=praw.Reddit(user_agent="u/tooproudtopose reddit-scraper")
 
 for username in unscraped:
     basename = '%s.user.csv' % username
-    full_path = '/Users/mlinegar/Documents/LDA/Usertext/%s' % fname
+    full_path = '/Users/mlinegar/Documents/LDA/Usertext/%s' % basename
     start = time.time()
     comments = r.get_redditor(username).get_comments(limit=None)
     lc = 0
@@ -67,6 +70,7 @@ for username in unscraped:
             except e:
                 print("could not write comment to db: %s" % e)
 
+    session.commit()
     end = time.time()
 
-    print( "        %d:%d - %s: %d comments downloaded in %d seconds." % (end.tm_hour, end.tm_min, username, lc, int(end-start)))
+    print( "        %s: %d comments downloaded in %d seconds." % (username, lc, int(end-start)))
