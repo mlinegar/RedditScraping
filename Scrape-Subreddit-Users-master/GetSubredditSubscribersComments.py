@@ -6,10 +6,11 @@
 #    entered in the dict
 
 import database as db
-from GetSubredditSubscribers import *
+from GetSubredditSubscribers import * # Let's talk about this -- RMD
 import time
 import praw
 import csv
+from sqlalchemy import distinct
 
 _nposts = 1
 starttime = time.time()
@@ -26,7 +27,7 @@ end = time.time()
 print("Time elapsed to scrape %d posts: %d seconds" % (_nposts, int(end-start)))
 print("# Unique subreddit users found: %d" % len(s.authors))
 
-session = Session()
+session = Session() # Aaaaaand this -- RMD
 
 for username in s.authors:
     try:
@@ -35,16 +36,15 @@ for username in s.authors:
             pass
         else:
             session.add(User(username))
+            session.commit()
     except Exception as err:
         # TODO: determine exact SQLAlchemy error thrown here
         print("could not save user %s: %s" % (username, err))
 
-session.commit()
 session = Session()
 
-from sqlalchemy import distinct
-allusers = session.query(User.username)
-scraped = session.query(distinct(Comment.author))
+allusers = session.query(User.username).all()
+scraped = session.query(distinct(Comment.author)).all()
 unscraped = [user for user in allusers if user not in scraped]
 # create a function for the try/except, then run the try block on the function
 # add getting comments into the scraper
@@ -67,10 +67,10 @@ for username in unscraped:
             db_comment = Comment(comment)
             try:
                 session.add(db_comment)
+                session.commit()
             except e:
                 print("could not write comment to db: %s" % e)
 
-    session.commit()
     end = time.time()
 
     print( "        %s: %d comments downloaded in %d seconds." % (username, lc, int(end-start)))
