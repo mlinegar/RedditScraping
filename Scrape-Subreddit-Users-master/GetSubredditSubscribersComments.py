@@ -10,6 +10,7 @@ from GetSubredditSubscribers import *
 import time
 import praw
 import csv
+from sqlalchemy import distinct
 
 _nposts = 1
 starttime = time.time()
