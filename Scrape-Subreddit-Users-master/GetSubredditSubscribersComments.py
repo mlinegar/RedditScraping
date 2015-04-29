@@ -43,9 +43,8 @@ for username in s.authors:
 session.commit()
 session = Session()
 
-from sqlalchemy import distinct
-allusers = session.query(User.username)
-scraped = session.query(distinct(Comment.author))
+allusers = session.query(User.username).all()
+scraped = session.query(distinct(Comment.author)).all()
 unscraped = [user for user in allusers if user not in scraped]
 # create a function for the try/except, then run the try block on the function
 # add getting comments into the scraper
