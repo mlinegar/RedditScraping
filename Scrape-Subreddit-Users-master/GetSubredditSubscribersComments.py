@@ -36,11 +36,11 @@ for username in s.authors:
             pass
         else:
             session.add(User(username))
+            session.commit()
     except Exception as err:
         # TODO: determine exact SQLAlchemy error thrown here
         print("could not save user %s: %s" % (username, err))
 
-session.commit()
 session = Session()
 
 allusers = session.query(User.username).all()
@@ -67,10 +67,10 @@ for username in unscraped:
             db_comment = Comment(comment)
             try:
                 session.add(db_comment)
+                session.commit()
             except e:
                 print("could not write comment to db: %s" % e)
 
-    session.commit()
     end = time.time()
 
     print( "        %s: %d comments downloaded in %d seconds." % (username, lc, int(end-start)))
