@@ -6,7 +6,7 @@
 #    entered in the dict
 
 import database as db
-from GetSubredditSubscribers import *
+from GetSubredditSubscribers import * # Let's talk about this -- RMD
 import time
 import praw
 import csv
@@ -27,7 +27,7 @@ end = time.time()
 print("Time elapsed to scrape %d posts: %d seconds" % (_nposts, int(end-start)))
 print("# Unique subreddit users found: %d" % len(s.authors))
 
-session = Session()
+session = Session() # Aaaaaand this -- RMD
 
 for username in s.authors:
     try:
