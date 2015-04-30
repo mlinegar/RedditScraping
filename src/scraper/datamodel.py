@@ -1,8 +1,7 @@
-from database import *
-from sqlalchemy import Table, Column, Boolean, Float, Integer, String, Unicode, DateTime, ForeignKey
-from sqlalchemy.orm import relation,backref
 import datetime
 
+from src.scraper.database import *
+from sqlalchemy import Column, Float, Integer, String, DateTime
 
 
 class User(Base):
@@ -52,3 +51,9 @@ class Comment(Base):
         self.parent_id      = comment.parent_id
         self.score          = self.ups - self.downs
     
+
+def init_db():
+    Base.metadata.create_all()
+
+if __name__ == "__main__":
+    init_db()

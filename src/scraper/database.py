@@ -6,7 +6,3 @@ from sqlalchemy.ext.declarative import declarative_base
 engine = create_engine('sqlite:///test.db')
 Session = sessionmaker()
 Base = declarative_base(bind=engine)
-
-def init_db():
-    import datamodel
-    Base.metadata.create_all()

@@ -5,12 +5,17 @@
 #    to hold users instead of a dict? Or enter users into db as they're
 #    entered in the dict
 
-import database as db
-from GetSubredditSubscribers import * # Let's talk about this -- RMD
 import time
-import praw
 import csv
+import datetime
+
+from sqlalchemy.orm import Session
+from src.scraper.GetSubredditSubscribers import SubredditScraper
+import praw
 from sqlalchemy import distinct
+from src.scraper.datamodel import User, Comment
+import
+.database
 
 _nposts = 1
 starttime = time.time()
@@ -31,8 +36,8 @@ session = Session() # Aaaaaand this -- RMD
 
 for username in s.authors:
     try:
-        found_user = session.query(User).filter(User.username == username)
-        if found_user:
+        found_users = session.query(User).filter(User.username == username).count()
+        if found_users:
             pass
         else:
             session.add(User(username))
@@ -68,7 +73,7 @@ for username in unscraped:
             try:
                 session.add(db_comment)
                 session.commit()
-            except e:
+            except Exception as e:
                 print("could not write comment to db: %s" % e)
 
     end = time.time()

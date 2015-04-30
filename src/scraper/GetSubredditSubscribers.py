@@ -1,6 +1,4 @@
 import praw
-import database as db
-from datamodel import *
 
 _ua = "u/tooproudtopose reddit-scraper"
 target_subreddit = 'Reedcollege'
