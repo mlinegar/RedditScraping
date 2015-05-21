@@ -19,7 +19,7 @@ for user in os.listdir(in_dir):
 
 def iter_docs(topdir, stoplist):
     for user in os.listdir(topdir):
-        with open(os.path.join(topdir, user), 'rbRight') as g:
+        with open(os.path.join(topdir, user), 'rb') as g:
             text = g.read()
             yield(x for x in gensim.utils.tokenize(text, lowercase= True, deacc= True, errors= "ignore")
             if x not in stoplist)
