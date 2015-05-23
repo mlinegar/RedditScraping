@@ -43,4 +43,4 @@ corpus = MyCorpus(out_dir, stoplist)
 corpus.dictionary.save(os.path.join(processed_dir, "firsttry.dict"))
 gensim.corpora.MmCorpus.serialize(os.path.join(processed_dir, "firsttry.mm"), corpus)
 
-# I think the problem is a problem with Pickle - Pickle expects us to use 'rb', here we use just 'r'.
+# I think the problem is a problem with Pickle - Pickle``` expects us to use 'rb', here we use just 'r'.
