@@ -18,7 +18,7 @@ from scraper.GetSubredditSubscribers import SubredditScraper
 from scraper.datamodel import User, Comment, init_db
 import scraper.database as db
 
-_nposts = 1000
+_nposts = 5
 starttime = time.time()
 
 init_db()
@@ -27,7 +27,7 @@ s = SubredditScraper()
 
 start = time.time()
 
-s.scrapeSubredditUsers(nposts=2)
+s.scrapeSubredditUsers(nposts=_nposts)
 end = time.time()
 
 print("Time elapsed to scrape %d posts: %d seconds" % (_nposts, int(end-start)))
@@ -62,14 +62,20 @@ for result in unscraped:
     basename = '%s.user.csv' % username
     full_path = '/Users/mlinegar/Data/LDA/Usertext/%s' % basename
     start = time.time()
-    comments = r.get_redditor(username).get_comments(limit=100)
+    comments = []
+
+    try:
+        comments = r.get_redditor(username).get_comments(limit=100)
+    except Exception as e:
+        print("Could not find user %s" %result)
+
     lc = 0
 
-    with open(full_path, "w") as f:
+    with open(full_path, "wb") as f:
         writer = csv.writer(f, lineterminator = "\n")
 
         for comment in comments:
-            writer.writerow((comment.body, comment.author, datetime.datetime.fromtimestamp(comment.created_utc)))
+            writer.writerow((comment.body, comment.author, comment.subreddit.display_name, datetime.datetime.fromtimestamp(comment.created_utc)))
             lc += 1
             db_comment = Comment(comment)
             try:
