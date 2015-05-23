@@ -67,7 +67,7 @@ for result in unscraped:
     try:
         comments = r.get_redditor(username).get_comments(limit=100)
     except Exception as e:
-        print("Could not find user %s" %result)
+        print("Could not find user %s" %username)
 
     lc = 0
 
