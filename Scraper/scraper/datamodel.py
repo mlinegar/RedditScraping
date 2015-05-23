@@ -1,6 +1,6 @@
 import datetime
 
-from src.scraper.database import *
+from .database import *
 from sqlalchemy import Column, Float, Integer, String, DateTime
 
 
