@@ -1,6 +1,6 @@
 # NOTES
 #
-#  * Should add associated subreddit to user entry. 
+#  * Should add associated subreddit to user entry.
 #  * Users should get inserted as they're scraped. Maybe use database
 #    to hold users instead of a dict? Or enter users into db as they're
 #    entered in the dict
@@ -18,7 +18,8 @@ from scraper.GetSubredditSubscribers import SubredditScraper
 from scraper.datamodel import User, Comment, init_db
 import scraper.database as db
 
-_nposts = 5
+post_limit = 1
+comment_limit = 100
 starttime = time.time()
 
 init_db()
@@ -27,10 +28,10 @@ s = SubredditScraper()
 
 start = time.time()
 
-s.scrapeSubredditUsers(nposts=_nposts)
+s.scrapeSubredditUsers(nposts=post_limit)
 end = time.time()
 
-print("Time elapsed to scrape %d posts: %d seconds" % (_nposts, int(end-start)))
+print("Time elapsed to scrape %d posts: %d seconds" % (comment_limit, int(end-start)))
 print("# Unique subreddit users found: %d" % len(s.authors))
 
 session = Session() # Aaaaaand this -- RMD
@@ -65,13 +66,13 @@ for result in unscraped:
     comments = []
 
     try:
-        comments = r.get_redditor(username).get_comments(limit=100)
+        comments = r.get_redditor(username).get_comments(limit=comment_limit)
     except Exception as e:
         print("Could not find user %s" %username)
 
     lc = 0
 
-    with open(full_path, "wb") as f:
+    with open(full_path, "w") as f:
         writer = csv.writer(f, lineterminator = "\n")
 
         for comment in comments:
