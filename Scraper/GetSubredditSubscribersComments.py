@@ -18,8 +18,8 @@ from scraper.GetSubredditSubscribers import SubredditScraper
 from scraper.datamodel import User, Comment, init_db
 import scraper.database as db
 
-post_limit = 1
-comment_limit = 100
+post_limit = 1000
+comment_limit = 1000
 starttime = time.time()
 
 init_db()
