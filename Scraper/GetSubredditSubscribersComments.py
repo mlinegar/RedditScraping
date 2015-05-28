@@ -8,6 +8,7 @@
 import time
 import csv
 import datetime
+import os
 
 from sqlalchemy.orm import Session
 
@@ -57,11 +58,11 @@ unscraped = [user for user in allusers if user not in scraped]
 # add getting comments into the scraper
 
 r=praw.Reddit(user_agent="u/tooproudtopose reddit-scraper")
+path = os.path.expanduser('~/Data/LDA/Usertext/')
 
 for result in unscraped:
     username = result[0]
     basename = '%s.user.csv' % username
-    full_path = '/Users/mlinegar/Data/LDA/Usertext/%s' % basename
     start = time.time()
     comments = []
 
@@ -72,7 +73,7 @@ for result in unscraped:
 
     lc = 0
 
-    with open(full_path, "w") as f:
+    with open(path + basename, "w") as f:
         writer = csv.writer(f, lineterminator = "\n")
 
         for comment in comments:

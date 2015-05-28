@@ -5,9 +5,9 @@ import gensim
 import nltk
 import logging
 
-in_dir = '/Users/mlinegar/Data/LDA/Usertext/'
-out_dir = '/Users/mlinegar/Data/LDA/textfiles/'
-processed_dir = '/Users/mlinegar/Data/LDA/BoW'
+in_dir = os.path.expanduser('~/Data/LDA/Usertext/')
+out_dir = os.path.expanduser('~/Data/LDA/textfiles/')
+processed_dir = os.path.expanduser('~/Data/LDA/BoW')
 
 for user_csv in glob.glob(in_dir + "*.csv"):
     comment_text = []
