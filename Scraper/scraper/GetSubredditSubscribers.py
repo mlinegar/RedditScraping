@@ -1,7 +1,7 @@
 import praw
 
 _ua = "u/tooproudtopose reddit-scraper"
-target_subreddit = 'WorldNews'
+target_subreddit = 'relationships'
 
 class SubredditScraper(object):
     def __init__(self,ua=_ua):
