@@ -21,6 +21,7 @@ import scraper.database as db
 
 post_limit = 1000
 comment_limit = 1000
+list_of_subreddits = ["funny","AskReddit","announcements","pics","todayilearned","worldnews","science","IAmA","blog","videos","gaming","movies","Music","aww","news","gifs","askscience","explainlikeimfive","technology","EarthPorn","books","bestof","television","WTF","AdviceAnimals","LifeProTips","sports","mildlyinteresting","DIY","Fitness","Showerthoughts","space","tifu","Jokes","food","photoshopbattles","InternetIsBeautiful","GetMotivated","history","gadgets","nottheonion","dataisbeautiful","Futurology","politics","Documentaries","listentothis","personalfinance","philosophy","nosleep","Art","OldSchoolCool","creepy","UpliftingNews","WritingPrompts","TwoXChromosomes","atheism","reddit.com","woahdude","gonewild","trees","leagueoflegends","chan","programming","Games","fffffffuuuuuuuuuuuu","sex","nsfw","Android","reactiongifs","cringepics","gameofthrones","malefashionadvice","Frugal","YouShouldKnow","ImGoingToHellForThis","pokemon","interestingasfuck","HistoryPorn","RealGirls","Minecraft","comics","AskHistorians","lifehacks","pcmasterrace","tattoos","Unexpected","JusticePorn","nfl","NSFW_GIF","FoodPorn","BlackPeopleTwitter","facepalm","soccer","wheredidthesodago","europe","wallpapers","cringe","TrueReddit","gentlemanboners","freebies"]
 starttime = time.time()
 
 init_db()
@@ -29,7 +30,8 @@ s = SubredditScraper()
 
 start = time.time()
 
-s.scrapeSubredditUsers(nposts=post_limit)
+for subreddit in list_of_subreddits:
+    s.scrapeSubredditUsers(target_subreddit= subreddit, nposts=post_limit)
 end = time.time()
 
 print("Time elapsed to scrape %d posts: %d seconds" % (comment_limit, int(end-start)))

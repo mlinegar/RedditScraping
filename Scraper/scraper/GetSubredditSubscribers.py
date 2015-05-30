@@ -1,14 +1,13 @@
 import praw
 
 _ua = "u/tooproudtopose reddit-scraper"
-target_subreddit = 'relationships'
 
 class SubredditScraper(object):
     def __init__(self,ua=_ua):
         self.conn = praw.Reddit(user_agent=ua)
         self.authors={}
 
-    def scrapeSubredditUsers(self, target_subreddit = target_subreddit, nposts=5):
+    def scrapeSubredditUsers(self, target_subreddit, nposts):
         
         r = self.conn
         sub = r.get_subreddit(target_subreddit)
