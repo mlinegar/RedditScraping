@@ -16,7 +16,10 @@ class SubredditScraper(object):
         n=0
         for post in post_generator:
             n+=1
-            comments = praw.helpers.flatten_tree(post.comments)
+            try:
+                comments = praw.helpers.flatten_tree(post.comments)
+            except Exception as e:
+                print("Could not store comment due to %s" %e)
             print("Scraped %d posts" % n)
             lc = len(comments)
             nc = 0
